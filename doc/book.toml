@@ -1,0 +1,6 @@
+[book]
+authors = ["hari"]
+language = "en"
+multilingual = false
+src = "src"
+title = "Learn Rust with Linked Lists"
