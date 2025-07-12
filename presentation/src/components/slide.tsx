@@ -23,12 +23,14 @@ export class Slide extends Node {
       >
         <Rect layout direction="column" fill="white" grow={1}/>
         <Rect layout direction="column" fill="white" grow={8}/>
-        <Rect layout direction="row" fill="white" grow={1}
+        <Rect layout direction="row" fill="white"
         >
+          <Rect grow={20}/>
           <Txt
             text={`${slide_props.slide_number}`}
             fontSize={28}
             fill="black"
+            // grow={1}
           />
         </Rect>
       </Rect>
