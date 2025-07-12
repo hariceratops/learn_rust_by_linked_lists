@@ -17,7 +17,7 @@ export class Slide extends Node {
         direction="column"
         width="100%"
         height="100%"
-        padding={40}
+        padding={20}
         gap={20}
         fill="white"
       >
@@ -28,9 +28,8 @@ export class Slide extends Node {
           <Rect grow={20}/>
           <Txt
             text={`${slide_props.slide_number}`}
-            fontSize={28}
+            fontSize={40}
             fill="black"
-            // grow={1}
           />
         </Rect>
       </Rect>

@@ -1,5 +1,6 @@
 import {makeScene2D, Txt} from '@motion-canvas/2d';
-import { Slide } from '../components/slide';
+import {beginSlide, waitFor} from '@motion-canvas/core';
+import {Slide} from '../components/slide';
 
 
 export default makeScene2D(function* (view) {
@@ -16,5 +17,7 @@ export default makeScene2D(function* (view) {
     )
   });
   view.add(slide);
-  yield* slide.opacity(1, 0.6);
+
+  yield* beginSlide('first slide');
+  yield* waitFor(1);
 });
