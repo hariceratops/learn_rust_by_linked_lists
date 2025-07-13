@@ -1,14 +1,20 @@
 import { LayoutProps } from "@motion-canvas/2d";
-import { Rect, Layout } from "@motion-canvas/2d/lib/components";
+import { Rect, Node, Layout } from "@motion-canvas/2d/lib/components";
 
 
 export interface SlideBodyProps extends LayoutProps {
-  contents?: Layout[];
+  contents: Layout[];
 }
 
 export class SlideBody extends Layout {
-  constructor(body_props?: SlideBodyProps) {
+  private contents: Layout[] = []
+
+  constructor(body_props: SlideBodyProps) {
     super({...body_props, direction: "column"});
+
+    for (let item of body_props.contents) {
+      this.contents.push(new Rect({layout: true, grow:1, children: item}));
+    }
 
     this.add(
       <Rect layout
@@ -17,6 +23,7 @@ export class SlideBody extends Layout {
         height="100%"
         fill="white"
       >
+        {this.contents}
       </Rect>
     );
   }

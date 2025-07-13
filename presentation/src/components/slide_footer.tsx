@@ -11,8 +11,8 @@ export interface SlideFooterProps extends LayoutProps {
 export class SlideFooter extends Layout {
   private readonly slide_number_font_size: number = 40;
 
-  constructor(footer_props?: SlideFooterProps) {
-    super({...footer_props, direction: "row"});
+  constructor(footer_props: SlideFooterProps) {
+    super({...footer_props, direction: "column"});
 
     this.add(
       <Rect layout direction="row" fill={theme.colors.background}>

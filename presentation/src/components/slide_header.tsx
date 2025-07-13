@@ -11,7 +11,7 @@ export interface SlideHeaderProps extends LayoutProps {
 export class SlideHeader extends Layout {
   private readonly title_font_size: number = 80;
 
-  constructor(header_props?: SlideHeaderProps) {
+  constructor(header_props: SlideHeaderProps) {
     super({...header_props,});
 
     this.add(
