@@ -5,16 +5,16 @@ import {Slide} from '../components/slide';
 
 export default makeScene2D(function* (view) {
   const slide = new Slide({
-    title: 'who_am_i',
+    slide_heading: 'who_am_i',
     slide_number: 1,
     children: (
-      <Txt
+      <Txt layout
         text="Learn Rust with a Linked List"
         fontSize={42}
         fontFamily={"Source Code Pro"}
         fill="black"
       />
-    )
+    ),
   });
   view.add(slide);
 
