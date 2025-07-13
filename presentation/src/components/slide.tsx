@@ -11,7 +11,7 @@ import '../global.css';
 export interface SlideProps extends LayoutProps {
   slide_heading: string;
   slide_number: number;
-  contents?: Layout[];
+  contents?: Node[];
 }
 
 export class Slide extends Layout {
