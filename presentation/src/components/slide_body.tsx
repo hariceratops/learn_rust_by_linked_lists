@@ -14,7 +14,6 @@ export class SlideBody extends Layout {
 
   constructor(body_props: SlideBodyProps) {
     super({...body_props, direction: "column"});
-    console.log(body_props.contents.length)
 
     for (let item of body_props.contents) {
       this.contents.push(
@@ -22,6 +21,7 @@ export class SlideBody extends Layout {
       )
     }
 
+    // todo: use an arrow function instead of raw loop
     this.add(
       <Rect layout
         direction="column"

@@ -1,6 +1,6 @@
-import {makeScene2D, Txt, Layout} from '@motion-canvas/2d';
-import {beginSlide, waitFor} from '@motion-canvas/core';
-import {Slide} from '../components/slide';
+import { makeScene2D, Txt, Circle } from '@motion-canvas/2d';
+import { beginSlide, waitFor, all, createRef } from '@motion-canvas/core';
+import { Slide } from '../components/slide';
 import { Title } from '../components/title';
 
 
@@ -29,9 +29,10 @@ export default makeScene2D(function* (view) {
   yield* beginSlide('slide_1');
   yield* waitFor(1);
 
+  const myCircle = createRef<Circle>();
   const slide_2 = new Slide({
     slide_heading: 'Memory Layouts',
-    slide_number: 1,
+    slide_number: 2,
     contents: [
       <Txt
         text="Learn Rust with a Linked List"
@@ -42,6 +43,22 @@ export default makeScene2D(function* (view) {
     ]
   });
   view.add(slide_2);
+
+  view.add(
+    <Circle
+      ref={myCircle}
+      // try changing these properties:
+      x={-300}
+      width={140}
+      height={140}
+      fill="#e13238"
+    />,
+  );
+
   yield* beginSlide('slide_2');
-  yield* waitFor(1);
+  // yield* waitFor(1);
+  yield* all(
+    myCircle().position.x(300, 1).to(-300, 1),
+    myCircle().fill('#e6a700', 1).to('#e13238', 1),
+  );
 });
