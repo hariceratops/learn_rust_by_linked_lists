@@ -2,6 +2,7 @@ import { makeScene2D, Txt, Circle } from '@motion-canvas/2d';
 import { beginSlide, waitFor, all, createRef } from '@motion-canvas/core';
 import { Slide } from '../components/slide';
 import { Title } from '../components/title';
+import { SlideTextTree, TextTreeNode, text_node } from '../components/slide_text_tree';
 
 
 export default makeScene2D(function* (view) {
@@ -17,12 +18,19 @@ export default makeScene2D(function* (view) {
     slide_heading: 'who_am_i',
     slide_number: 1,
     contents: [
-      <Txt
-        text="Learn Rust with a Linked List"
-        fontSize={42}
-        fontFamily={"Source Code Pro"}
-        fill="black"
-      />
+      <SlideTextTree
+        tree={text_node("Hari Prasad", "normal", [text_node("Mbition")])}
+      />,
+      // new SlideTextTree({
+      //   tree: new TextTreeNode({
+      //     text: "Hari Prasad",
+      //     children: [
+      //       new TextTreeNode({
+      //         text: "Mbition"
+      //       })
+      //     ]
+      //   }),
+      // }),
     ]
   });
   view.add(slide_1);
