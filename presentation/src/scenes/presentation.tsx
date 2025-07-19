@@ -15,22 +15,19 @@ export default makeScene2D(function* (view) {
   yield* waitFor(1);
 
   const slide_1 = new Slide({
-    slide_heading: 'who_am_i',
+    slide_heading: 'whoami',
     slide_number: 1,
     contents: [
-      <SlideTextTree
-        tree={text_node("Hari Prasad", "normal", [text_node("Mbition")])}
-      />,
-      // new SlideTextTree({
-      //   tree: new TextTreeNode({
-      //     text: "Hari Prasad",
-      //     children: [
-      //       new TextTreeNode({
-      //         text: "Mbition"
-      //       })
-      //     ]
-      //   }),
-      // }),
+      new SlideTextTree({
+        tree: {
+          text: ("Hari Prasad"),
+          children: [
+            { text: ("Mbition"), children: [] },
+            { text: ("13059 Berlin"), children: [] },
+            { text: ("But I must explain to you how all this mistaken idea of denouncing pleasure"), children: [] }
+          ]
+        }
+      }),
     ]
   });
   view.add(slide_1);

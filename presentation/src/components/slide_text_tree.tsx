@@ -1,5 +1,6 @@
 import { NodeProps } from "@motion-canvas/2d";
-import { Layout, Txt } from '@motion-canvas/2d'
+import { Layout, Txt, Rect, Node } from '@motion-canvas/2d'
+import { createRef, debug } from "@motion-canvas/core";
 
 
 const tab_count: number = 4;
@@ -45,10 +46,6 @@ export function slide_text_props(tree: TextTreeNode, text_tree_style?: TextTreeS
   };
 }
 
-function padLeft(str: string, n: number): string {
-  return ' '.repeat(n) + str;
-}
-
 export class SlideTextTree extends Layout {
   constructor(text_tree_props: SlideTextTreeProps) {
     let fixed_tree_props = slide_text_props(text_tree_props.tree, text_tree_props.text_tree_style);
@@ -65,16 +62,27 @@ export class SlideTextTree extends Layout {
     text_tree_style: TextTreeStyle
   ) {
     this.add(
-      <Txt
-        layout
-        textWrap={true}
-        text={padLeft(text_tree_root.text, depth * tab_count)}
-        fontStyle={text_tree_root.font_style}
-        // x={depth * text_tree_style.indent_step}
-        fontFamily={text_tree_style.font_family}
-        fontSize={text_tree_style.font_size}
-        fill={text_tree_style.text_color}
-      />
+      <Layout
+        direction={"row"}
+      >
+        <Layout width={depth * text_tree_style.indent_step}/>
+        <Txt 
+          text={'- '}
+          fontFamily={text_tree_style.font_family}
+          fontSize={text_tree_style.font_size}
+          fill={text_tree_style.text_color}
+          marginRight={10}
+        />
+        <Txt
+          text={text_tree_root.text}
+          textWrap={true}
+          fontStyle={text_tree_root.font_style}
+          fontFamily={text_tree_style.font_family}
+          fontSize={text_tree_style.font_size}
+          fill={text_tree_style.text_color}
+        />
+      </Layout>
+
     );
 
     text_tree_root.children.forEach((child) =>
