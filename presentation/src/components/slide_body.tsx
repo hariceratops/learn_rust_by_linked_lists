@@ -2,35 +2,27 @@ import { LayoutProps } from "@motion-canvas/2d";
 import { Rect, Node, Layout } from "@motion-canvas/2d/lib/components";
 import { createRef } from "@motion-canvas/core";
 import { theme } from "../theme";
+import { SlideHBox } from "./slide_hbox";
+import { SlideVBox } from "./slide_vbox";
 
 
 export interface SlideBodyProps extends LayoutProps {
-  contents: Node[];
+  slide_body: SlideHBox | SlideVBox;
 }
 
 export class SlideBody extends Layout {
-  private contents: Node[] = []
   private readonly container = createRef<Rect>();
 
   constructor(body_props: SlideBodyProps) {
     super({...body_props, direction: "column"});
 
-    for (let item of body_props.contents) {
-      this.contents.push(
-        <Rect layout grow={1}>{item}</Rect>
-      )
-    }
-
-    // todo: use an arrow function instead of raw loop
     this.add(
       <Rect layout
         direction="column"
-        width="100%"
-        height="100%"
         fill={theme.colors.background}
         ref={this.container}
       >
-        {this.contents}
+        {body_props.slide_body}
       </Rect>
     );
   }

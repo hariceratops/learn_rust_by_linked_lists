@@ -3,8 +3,6 @@ import { Layout, Txt, Rect, Node } from '@motion-canvas/2d'
 import { createRef, debug } from "@motion-canvas/core";
 
 
-const tab_count: number = 4;
-
 export interface TextTreeNode {
   text: string;
   font_style?: string;
@@ -54,6 +52,7 @@ export class SlideTextTree extends Layout {
       direction: "column"
     });
     this.build_tree(0, fixed_tree_props.tree, fixed_tree_props.text_tree_style);
+    // todo also build reference tree so that bullet points can be used for animation
   }
 
   private build_tree(
@@ -82,7 +81,6 @@ export class SlideTextTree extends Layout {
           fontFamily={text_tree_style.font_family}
           fontSize={text_tree_style.font_size}
           fill={text_tree_style.text_color}
-          justifyContent={"stretch"}
         />
       </Layout>
 

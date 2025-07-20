@@ -4,6 +4,8 @@ import { Rect, Node, Layout } from "@motion-canvas/2d/lib/components";
 import { SlideHeader } from "./slide_header";
 import { SlideFooter } from "./slide_footer";
 import { SlideBody } from "./slide_body";
+import { SlideHBox } from "./slide_hbox";
+import { SlideVBox } from "./slide_vbox";
 import { theme } from "../theme"
 import '../global.css';
 
@@ -11,7 +13,7 @@ import '../global.css';
 export interface SlideProps extends LayoutProps {
   slide_heading: string;
   slide_number: number;
-  contents?: Node[];
+  slide_body?: SlideVBox | SlideHBox;
 }
 
 export class Slide extends Layout {
@@ -46,7 +48,7 @@ export class Slide extends Layout {
         />
         <SlideBody 
           ref={this.slide_body}
-          contents={slide_props.contents ?? []} 
+          slide_body={slide_props.slide_body} 
           grow={this.slide_body_quota} 
         /> 
         <SlideFooter 
