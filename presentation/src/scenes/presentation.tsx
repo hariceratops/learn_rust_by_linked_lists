@@ -2,7 +2,7 @@ import { makeScene2D, Txt, Circle } from '@motion-canvas/2d';
 import { beginSlide, waitFor, all, createRef } from '@motion-canvas/core';
 import { Slide } from '../components/slide';
 import { Title } from '../components/title';
-import { SlideTextTree, TextTreeNode, text_node } from '../components/slide_text_tree';
+import { SlideTextTree } from '../components/slide_text_tree';
 
 
 export default makeScene2D(function* (view) {
@@ -23,8 +23,8 @@ export default makeScene2D(function* (view) {
           text: ("Hari Prasad"),
           children: [
             { text: ("Mbition"), children: [] },
-            { text: ("13059 Berlin"), children: [] },
-            { text: ("But I must explain to you how all this mistaken idea of denouncing pleasure"), children: [] }
+            { text: ("Berlin"), children: [] },
+            { text: ("But I must explain to you how all this mistaken idea of denouncing pleasure. But I must explain to you how all this mistaken idea of denouncing pleasure"), children: [] }
           ]
         }
       }),

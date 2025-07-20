@@ -65,9 +65,11 @@ export class SlideTextTree extends Layout {
       <Layout
         direction={"row"}
       >
-        <Layout width={depth * text_tree_style.indent_step}/>
+        <Layout 
+          marginLeft={depth * text_tree_style.indent_step}
+        />
         <Txt 
-          text={'- '}
+          text={'-'}
           fontFamily={text_tree_style.font_family}
           fontSize={text_tree_style.font_size}
           fill={text_tree_style.text_color}
@@ -80,6 +82,7 @@ export class SlideTextTree extends Layout {
           fontFamily={text_tree_style.font_family}
           fontSize={text_tree_style.font_size}
           fill={text_tree_style.text_color}
+          justifyContent={"stretch"}
         />
       </Layout>
 
