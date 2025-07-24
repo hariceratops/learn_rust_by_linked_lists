@@ -65,7 +65,7 @@ export default makeScene2D(function* (view) {
         }),
         new SlideTextTree({
           tree: {
-            text: ("Fearless Concurrency"), children: []
+            text: ("Fearless Concurrency. But I must explain to you how all this mistaken idea of denouncing pleasure."), children: []
           }
         }),
         <Circle
@@ -85,8 +85,9 @@ export default makeScene2D(function* (view) {
   myCircle().restore();
   myCircle().parent().restore();
   myCircle().parent().layout(false);
+  let x = myCircle().position().x;
   yield* all(
-    myCircle().position.x(300, 1).to(100, 1),
+    myCircle().position.x(x + 100, 1).to(x, 1),
     myCircle().fill('#e6a700', 1).to('#e13238', 1),
   );
   yield* beginSlide('slide_3');

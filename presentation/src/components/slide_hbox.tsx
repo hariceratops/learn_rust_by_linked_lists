@@ -14,14 +14,12 @@ export interface SlideHBoxProps extends LayoutProps {
 }
 
 export class SlideHBox extends Layout {
-  private contents: (Node | Layout)[] = []
-
   constructor(hbox_props: SlideHBoxProps) {
     super({...hbox_props, direction: "row"});
 
     for (let item of hbox_props.contents) {
       this.add(
-        <Rect layout grow={1}>
+        <Rect grow={1} maxWidth={500}>
           {item}
         </Rect>
       )
