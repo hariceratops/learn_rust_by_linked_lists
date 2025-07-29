@@ -85,6 +85,7 @@ export default makeScene2D(function* (view) {
   myCircle().restore();
   myCircle().parent().restore();
   myCircle().parent().layout(false);
+  debug( myCircle().key );
   let x = myCircle().position().x;
   yield* all(
     myCircle().position.x(x + 100, 1).to(x, 1),
