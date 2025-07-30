@@ -24,6 +24,7 @@ export function* appear(object: Shape, duration = 1): ThreadGenerator {
 export default makeScene2D(function* (view) {
   const title = new Title({
     title: "Learn Rust with a couple of Linked Lists",
+    key: "title",
     presenter: "Hari Prasad Manoharan"
   });
   view.add(title);
