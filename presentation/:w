@@ -5,7 +5,7 @@ import { Title } from '../components/title';
 import { SlideTextTree } from '../components/slide_text_tree';
 import { MemoryLayout } from '../components/memory_layout';
 import { SlideVBox } from '../components/slide_vbox';
-import { SlideHBox } from '../components/slide_hbox';
+import { SlideHBox, HBoxElement } from '../components/slide_hbox';
 
 
 export default makeScene2D(function* (view) {
@@ -38,11 +38,13 @@ export default makeScene2D(function* (view) {
   view.add(slide_1);
   yield* beginSlide('slide_1');
 
-
+  const myCircle = createRef<Circle>();
+  const hbox = createRef<SlideHBox>();
   const slide_2 = new Slide({
     slide_heading: 'Memory Layouts',
     slide_number: 2,
     slide_body: new SlideHBox({
+      ref: hbox,
       contents: [
         ({
           content: new SlideTextTree({
@@ -62,7 +64,7 @@ export default makeScene2D(function* (view) {
         }),
         ({
           content: new Circle({
-            key: "circle_1",
+            ref: myCircle,
             width: 140,
             height: 140,
             fill: "#e13238"
@@ -74,12 +76,8 @@ export default makeScene2D(function* (view) {
   });
   view.add(slide_2);
   yield* beginSlide('slide_2');
-
-  const circle = view.findFirst(node => node.key === "circle_1") as Circle;
-  yield* all(
-    circle.position.x(100, 1).to(300, 1),
-    circle.fill('#e6a700', 1).to('#e13238', 1),
-  );
+  view.add(slide_2);
+  myCircle().save();
   // myCircle().parent().save();
   // myCircle().restore();
   // myCircle().parent().restore();
@@ -96,6 +94,7 @@ export default makeScene2D(function* (view) {
     slide_heading: 'Memory Layouts',
     slide_number: 2,
     slide_body: new SlideHBox({
+      ref: hbox,
       contents: [
         ({
           content: <MemoryLayout/>,

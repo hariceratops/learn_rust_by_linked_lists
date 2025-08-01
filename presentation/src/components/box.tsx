@@ -1,15 +1,16 @@
 import { LayoutProps } from "@motion-canvas/2d";
 import { Rect, Node, Layout } from "@motion-canvas/2d/lib/components";
+import { createRef } from "@motion-canvas/core";
+import { theme } from "../theme";
 
 
 export interface HBoxElement {
-  content: Node | Layout;
-  share: number;
-  justification?: string;
+  content: Node | Layout
+  share: number
 }
 
 export interface SlideHBoxProps extends LayoutProps {
-  contents: HBoxElement[];
+  contents: (Node | Layout)[];
 }
 
 export class SlideHBox extends Layout {
@@ -18,13 +19,8 @@ export class SlideHBox extends Layout {
 
     for (let item of hbox_props.contents) {
       this.add(
-        <Rect 
-          grow={1}
-          maxWidth={500}
-          justifyContent={"center"}
-          alignItems={"center"}
-        >
-          {item.content}
+        <Rect grow={1} maxWidth={500}>
+          {item}
         </Rect>
       )
     }
