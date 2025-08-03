@@ -17,6 +17,7 @@ export default makeScene2D(function* (view) {
   view.add(title);
   yield* beginSlide('title');
 
+
   const slide_1 = new Slide({
     slide_heading: 'whoami',
     slide_number: 1,
@@ -47,10 +48,13 @@ export default makeScene2D(function* (view) {
         ({
           content: new SlideTextTree({
             tree: {
-              text: ("Ownership"), children: []
+              text: ("Ownership"), children: [{text: "No more than one mutable reference", children: []}]
             }
           }),
-          share: 30
+          share: 30,
+          alignment: "start",
+          justification: "start",
+          content_max_width: 500,
         }),
         ({
           content: new SlideTextTree({
@@ -58,7 +62,10 @@ export default makeScene2D(function* (view) {
               text: ("Fearless Concurrency. But I must explain to you how all this mistaken idea of denouncing pleasure."), children: []
             }
           }),
-          share: 30
+          share: 30,
+          alignment: "start",
+          justification: "start",
+          content_max_width: 500,
         }),
         ({
           content: new Circle({
@@ -67,7 +74,10 @@ export default makeScene2D(function* (view) {
             height: 140,
             fill: "#e13238"
           }),
-          share: 40
+          share: 40,
+          alignment: "center",
+          justification: "center",
+          content_max_width: 500
         })
       ]
     })
@@ -76,30 +86,28 @@ export default makeScene2D(function* (view) {
   yield* beginSlide('slide_2');
 
   const circle = view.findFirst(node => node.key === "circle_1") as Circle;
+  circle.parent().save();
+  circle.restore();
+  circle.parent().restore();
+  circle.parent().layout(false);
+  let x = circle.position().x;
   yield* all(
-    circle.position.x(100, 1).to(300, 1),
+    circle.position.x(x + 100, 1).to(x, 1),
     circle.fill('#e6a700', 1).to('#e13238', 1),
   );
-  // myCircle().parent().save();
-  // myCircle().restore();
-  // myCircle().parent().restore();
-  // myCircle().parent().layout(false);
-  // let x = myCircle().position().x;
-  // yield* all(
-    // myCircle().position.x(x + 100, 1).to(x, 1),
-    // myCircle().fill('#e6a700', 1).to('#e13238', 1),
-  // );
 
-  const myMemoryLayout = createRef<MemoryLayout>();
-  const hbox_2 = createRef<SlideHBox>();
+
   const slide_3 = new Slide({
     slide_heading: 'Memory Layouts',
-    slide_number: 2,
+    slide_number: 3,
     slide_body: new SlideHBox({
       contents: [
         ({
           content: <MemoryLayout/>,
-          share: 100
+          share: 100,
+          alignment: "center",
+          justification: "center",
+          content_max_width: 4000,
         })
       ]
     })

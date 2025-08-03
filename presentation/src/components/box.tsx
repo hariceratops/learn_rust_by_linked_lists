@@ -5,12 +5,14 @@ import { theme } from "../theme";
 
 
 export interface HBoxElement {
-  content: Node | Layout
-  share: number
+  content: Node | Layout;
+  share: number;
+  alignment: string;
 }
 
 export interface SlideHBoxProps extends LayoutProps {
   contents: (Node | Layout)[];
+  content_max_width: number;
 }
 
 export class SlideHBox extends Layout {

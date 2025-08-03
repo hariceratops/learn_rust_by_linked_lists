@@ -1,11 +1,14 @@
-import { LayoutProps } from "@motion-canvas/2d";
+import { FlexContent, FlexItems, LayoutProps } from "@motion-canvas/2d";
 import { Rect, Node, Layout } from "@motion-canvas/2d/lib/components";
+import { sum_array } from "../utils/sum";
 
 
 export interface HBoxElement {
   content: Node | Layout;
   share: number;
-  justification?: string;
+  justification: FlexContent;
+  alignment: FlexItems;
+  content_max_width: number;
 }
 
 export interface SlideHBoxProps extends LayoutProps {
@@ -15,14 +18,15 @@ export interface SlideHBoxProps extends LayoutProps {
 export class SlideHBox extends Layout {
   constructor(hbox_props: SlideHBoxProps) {
     super({...hbox_props, direction: "row"});
+    const display_share = sum_array(hbox_props.contents, c => c.share);
 
     for (let item of hbox_props.contents) {
       this.add(
         <Rect 
-          grow={1}
-          maxWidth={500}
-          justifyContent={"center"}
-          alignItems={"center"}
+          grow={item.share}
+          maxWidth={item.content_max_width}
+          justifyContent={item.justification}
+          alignItems={item.alignment}
         >
           {item.content}
         </Rect>
