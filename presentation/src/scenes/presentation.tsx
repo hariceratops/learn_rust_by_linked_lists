@@ -7,6 +7,9 @@ import { MemoryLayout } from '../components/memory_layout';
 import { SlideVBox } from '../components/slide_vbox';
 import { SlideHBox, HBoxElement, HBoxDetachedElement } from '../components/slide_hbox';
 
+import { Rect, Txt } from '@motion-canvas/2d';
+import { Node } from '@motion-canvas/2d';
+import { makeRef } from '@motion-canvas/core';
 
 export default makeScene2D(function* (view) {
   const title = new Title({
@@ -96,11 +99,6 @@ export default makeScene2D(function* (view) {
 
   const circle = view.findFirst(node => node.key === "circle_1") as Circle;
 
-  // circle.save();
-  // circle.parent().save();
-  // circle.restore();
-  // circle.parent().restore();
-  // circle.parent().layout(false);
   let x = circle.position().x;
   yield* all(
     circle.position.x(x + 100, 1).to(x, 1),
@@ -119,6 +117,87 @@ export default makeScene2D(function* (view) {
   });
   view.add(slide_3);
   yield* beginSlide('slide_3');
+
+
+  type Constructor<T> = new (...args: any[]) => T;
+
+  type RefRecord<T extends Record<string, Constructor<any>>> = {
+    [K in keyof T]: InstanceType<T[K]> | null;
+  };
+
+  function create_refs<T extends Record<string, new (...args: any[]) => Node>>(
+    schema: T
+  ): RefRecord<T> {
+    const result: any = {};
+    Object.keys(schema).forEach(key => {
+      result[key] = null;
+    });
+    return result;
+  }
+
+
+  function build_tree_with_refs<T extends Record<string, new (...args: any[]) => Node>>(
+    schema: T,
+    builder: (refs: RefRecord<T>) => Node
+  ) {
+    const refs = create_refs(schema);
+    const tree = builder(refs);
+    return { tree, refs };
+  }
+
+  const ref_schema = {
+    box: Rect,
+    label: Txt,
+  };
+
+  // const { tree, refs } = build_tree_with_refs(ref_schema, refs => (
+  //   <Node>
+  //     <Rect key="box" ref={makeRef(refs, 'box')} />
+  //     <Txt key="label" ref={makeRef(refs, 'label')} />
+  //   </Node>
+  // ));
+  //
+  // yield* refs.box?.position.x(300, 1);
+  // yield* refs.box?.fill('#e6a700', 1).to('#e13238', 1),
+  // yield* refs.label?.position.x(90);
+
+  // Recursively walk Node tree to collect refs
+  function collectRefs(node: Node, refs: Record<string, Node | null>): void {
+    if (node.key in refs) {
+      refs[node.key] = node;
+    }
+    node.children().forEach(child => collectRefs(child, refs))
+  }
+
+  // Main function
+  function build_refs<S extends Record<string, new (...args: any) => Node>>
+    (component: { layout: Node }, schema: S) 
+  {
+    const root = component.layout;
+    // Initialize refs with null
+    const refs = Object.fromEntries(Object.keys(schema).map(k => [k, null])) as RefRecord<S>;
+    collectRefs(root, refs);
+    return { tree: root, refs };
+  }
+
+  class MyScene {
+    static layout = (
+      <Node>
+        <Rect key="box" width={300} height={300}/>
+        <Txt key="label" />
+      </Node>
+    ) as Node;
+  }
+
+  const { tree, refs } = build_refs(MyScene, {
+    box: Rect,
+    label: Txt,
+  });
+  view.add(tree);
+  yield* beginSlide('slide_4_1');
+
+  // yield* refs.box?.position.x(300, 1);
+  yield* refs.box?.fill('#e6a700', 1).to('#e13238', 1);
+  yield* beginSlide('slide_4_2');
+  // yield* refs.label.fontSize(89);
 });
-
-
